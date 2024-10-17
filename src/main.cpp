@@ -121,8 +121,11 @@ void loop() {
   String message = "Watering: " + String(volt) + "[V], moisture Lv." +
                    String(moisture_level) + ", " + String(lux) + "[lux]";
 
-  if (moisture_level == 0 & (passed_time > 60. * 60. * 24. * 3)) {
-    M5.Lcd.println("1 day passed & dry soil");
+  if (moisture_level == 0 & (passed_time > 60. * 60. * 24. * 3.)) {
+    M5.Lcd.println("3 days passed & dry soil");
+    watering(message);
+  } else if (passed_time > 60. * 60. * 24. * 10.) {
+    M5.Lcd.println("10 days passed");
     watering(message);
   } else if (M5.BtnB.wasPressed()) {
     M5.Lcd.println("B button pressed");
