@@ -26,7 +26,10 @@ int post_slack(const String &slack_message, String &payload) {
   http.addHeader("Content-Type", "application/json");
 
   // POSTリクエスト送信
-  int status_code = http.POST(slack_message);
+  String message_json = "{\"text\": \"" + slack_message + "\"}";
+  Serial.println("message_json=");
+  Serial.println(message_json);
+  int status_code = http.POST(message_json);
 
   // エラー時に再試行する必要がない場合はこの行を削除
   if (status_code < 0) {
