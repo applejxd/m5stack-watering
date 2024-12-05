@@ -7,13 +7,15 @@
 
 namespace network {
 
-int post_slack(String &slack_message, String &payload) {
+int post_slack(const String &slack_message, String &payload) {
   HTTPClient http;
 
   // Slack APIのルーム情報を取得
   // https://www.moonmile.net/blog/archives/9229
   // https://zenn.dev/kou_pg_0131/articles/slack-api-post-message
   const String slack_info_room = spiffs::config["slack_info_room"];
+  Serial.print("slack_info_room=");
+  Serial.println(slack_info_room);
 
   // リクエストの初期化
   if (!http.begin(slack_info_room)) {

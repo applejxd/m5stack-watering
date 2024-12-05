@@ -52,7 +52,7 @@ void setup() {
 void watering(const String& message) {
   // Slack に投稿
   String payload;
-  const auto status_code = network::post_line(message, payload);
+  const auto status_code = network::post_slack(message, payload);
 
   M5.Lcd.printf("HTTP Status=%d\n", status_code);
   Serial.printf("POST method payload: %s\n", payload.c_str());

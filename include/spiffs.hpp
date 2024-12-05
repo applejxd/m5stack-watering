@@ -47,28 +47,34 @@ void load_config(const String& file_path) {
   }
 
   File fp = SPIFFS.open(file_path, FILE_READ);
-  CSV_Parser cp("ss", false, ',');
-
   if (!fp) {
     M5.Lcd.println("File open error.");
     return;
   }
 
-  while (fp.available()) {
-    cp << (char)fp.read();
+  CSV_Parser cp("ss", false, ',');
+
+  // 最後の行をキャッチするために
+  String line;
+  while (fp.available() || (fp.readStringUntil('\n').length() > 0)) {
+    line = fp.readStringUntil('\n');
+    cp << line.c_str();
   }
+
   fp.close();
 
   Serial.printf("Read CSV %d lines.\n", cp.getRowsCount());
 
-  char** col0 = (char**)cp[0];
-  char** col1 = (char**)cp[1];
+  if (cp.getRowsCount() > 0) {
+    char** col0 = (char**)cp[0];
+    char** col1 = (char**)cp[1];
 
-  for (int row = 0; row < cp.getRowsCount(); ++row) {
-    String key = col0[row];
-    String value = col1[row];
-    config[key] = value;
-    Serial.printf("%s: %s\n", key.c_str(), value.c_str());
+    for (int row = 0; row < cp.getRowsCount(); ++row) {
+      String key = col0[row];
+      String value = col1[row];
+      config[key] = value;
+      Serial.printf("%s: %s\n", key.c_str(), value.c_str());
+    }
   }
 }
 

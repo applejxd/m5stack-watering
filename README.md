@@ -27,7 +27,7 @@
 
 1. VSCode を起動
 2. PlatformIO IDE をインストール → サイドバーから選択
-3. `./data/config.csv` に設定ファイル保存
+3. `./data/config.csv` に設定ファイル保存（最終行は空行にしておく）
 4. `config.csv` の SPIFFS 書き込み1: `Platform` -> `Build Filesystem Image`
 5. `config.csv` の SPIFFS 書き込み2: `Platform` -> `Upload Filesystem Image`
 6. ビルド：`m5stack-core-esp32` → `General` → `Build`
